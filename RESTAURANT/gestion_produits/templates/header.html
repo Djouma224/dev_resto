@@ -1,0 +1,157 @@
+{% load static %}
+{% block header %}
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+	
+		<title>Tout</title>
+		<!-- <style>
+			#ombre:hover{
+				box-shadow: 0 0 15px rgb(0, 0, 0);
+				border-radius: 5px;
+				padding-bottom: O;
+				height: auto;
+			}
+		</style> -->
+	
+		<!-- favicon -->
+		<link rel="shortcut icon" type="image/png" href=" {% static ' gestion_produit/assets/img/favicon.png ' %}">		
+		<!-- google font -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+		<!-- fontawesome -->
+		<link rel="stylesheet" href="{% static 'gestion_produit/assets/css/all.min.css' %} ">
+		<!-- bootstrap -->
+		<link rel="stylesheet" href=" {% static 'gestion_produit/assets/bootstrap/css/bootstrap.min.css' %} ">
+		<!-- owl carousel -->
+		<link rel="stylesheet" href=" {% static 'gestion_produit/assets/css/owl.carousel.css' %} ">
+		<!-- magnific popup -->
+		<link rel="stylesheet" href=" {% static 'gestion_produit/assets/css/magnific-popup.css' %} ">
+		<!-- animate css -->
+		<link rel="stylesheet" href="{% static 'gestion_produit/assets/css/animate.css' %}">
+		<!-- mean menu css -->
+		<link rel="stylesheet" href="{% static 'gestion_produit/assets/css/meanmenu.min.css' %}">
+		<!-- main style -->
+		<link rel="stylesheet" href="{% static 'gestion_produit/assets/css/main.css' %}">
+		<!-- responsive -->
+		<link rel="stylesheet" href="{% static 'gestion_produit/assets/css/responsive.css' %}">
+		{% comment %} <link rel="stylesheet" href="{% static 'gestion_produit/assets/css/perso/style.css' %}"> {% endcomment %}
+
+	
+	</head>
+<body>
+	
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+	
+	<!-- header -->
+	
+	<div class="top-header-area" id="sticker" style="background-color: rgb(14, 13, 13);">
+		<!-- <li style=" float: right;color: white;">bonjour</li> -->
+		{% csrf_token %}
+		{% if user.is_authenticated %}
+			{% if user.profile %}
+		
+			<img src="{{ user.profile.url }}" alt="" style="width: 4%;float: right;border-radius: 50%;margin: 10px;position: absolute;right: 0;top: 0;">		
+			{% else %}
+		<img src="media/img/avatar.jpg" alt="" style="width: 4%;float: right;border-radius: 50%;margin: 10px;position: absolute;right: 0;top: 0;">		
+
+			{% endif %}
+		{% endif %}
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						
+						<div class="site-logo">
+							{% if user.is_authenticated %} 
+							<a href="{% url 'list_menu'%}">						
+								<h5 style="color: white;">{{ user.username }}</h5>
+							</a>
+							{% endif %}
+						</div>
+						
+						<!-- logo -->
+
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li class="active "><a href="{% url 'list_menu' %}" >ACCUEIL</a>
+								</li>
+								<li class=""><a href="{% url 'all_products' %}">MENU</a>
+									<ul class="sub-menu">
+										<li><a href="{% url 'all_products' %}">Tout</a></li>
+										{% for categori in cat %}
+										<li><a href="{% url 'categorie' categori.id %}">{{ categori.nom_categorie }}</a></li>
+										{% endfor %}
+									</ul>
+								</li>
+								<li class=""><a href="{% url 'reservation' %}">RESERVATION</a></li>
+								<li class=""><a href="{% url 'apropos' %}">A PROPOS</a></li>
+								<li class=""><a href="{% url 'contact' %}">CONTACT</a></li>
+
+								{% if not user.is_authenticated %} 
+								
+								<li class=" "><a href="#">CONNEXION</a>
+									<ul class="sub-menu">
+										<li><a href="{% url 'login' %}">Se connecter</a>
+											<li><a href="{% url 'singup' %}">S'inscrire</a></li>
+										
+									</ul>
+								</li>								
+								{% else %}
+								<li class=" "><a href="{% url 'logout' %}">DECONNEXION</a></li>
+
+								{% endif %}
+
+								
+								<li>
+									<div class="header-icons">
+										{% if user.is_authenticated %} 
+										<a class="shopping-cart" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"  style="position: relative;"> {% if user.is_authenticated %}<span style="position: absolute;background-color: red;border-radius: 30%;padding: 3px;font-size: 13px;top: -10px;font-weight: bold;">{{ nb }}</span>{% endif %}</i></a>
+										{% endif %}
+										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>			
+									</div>
+									
+								</li>															
+							</ul>
+						</nav>
+
+						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+						<!-- search area -->
+	<form method="get" action="{% url 'recherche' %}" class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Rcherche votre produit !!!</h3>
+							<input type="text" name="search" placeholder="Saisisser ici">
+							<button type="submit">Rchercher <i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+	<!-- end header -->

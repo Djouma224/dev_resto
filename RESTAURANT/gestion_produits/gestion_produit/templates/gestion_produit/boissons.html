@@ -1,0 +1,51 @@
+{% block header %}
+
+	{% include "header.html" %}
+ 
+{% endblock %}
+
+<!-- product section -->
+<div class="product-section mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="section-title">	
+					<h3><span class="orange-text">Nos</span> Boissons</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row product-lists">
+			{% for Produits in donnees  %}
+			<div class="col-lg-4 col-md-6 text-center berry">
+				<div class="single-product-item">
+					<div class="product-image">
+						<a href="{% url 'detail_produit' Produits.id %}"><img src="{{ Produits.image.url }}" alt="{{Produits.nom}}" ></a>
+					</div>
+					<h3>{{ Produits.nom }}</h3>
+					<p class="product-price">Prix: {{ Produits.prix }} GNF</p>
+					<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Ajouter au panier</a>
+					<a href="detail_produit/{{Produits.id}}" class="cart-btn"> detail</a>
+				</div>
+			</div>
+			{% endfor %}
+
+			
+		</div>
+	</div>
+</div>
+<!-- end product section -->
+
+
+
+
+
+
+{% block footer %}
+
+	{% include "footer.html" %}
+
+{% endblock %}
+

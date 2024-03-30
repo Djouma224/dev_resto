@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title> votres site E-Commerce</title>
+        <link rel="stylesheet" href="{% static 'gestion_compte/assets/djouma/style1.css' %}" type="text/css" media="all" />
+    </head>
+    <body>
+        <div>
+            <form method="POST" enctype="multipart/form-data" action="">
+                <div class="loginbox">
+                    {% csrf_token %}
+                    <center>
+                        <p>profile</p>
+                        <input type="file"name="image" accept="image/*">
+                    </center>
+                    
+                    <img src="{% static 'gestion_compte/assets/djouma/avatar.jpg' %}" alt="avatars" class="avatar" />   
+                    <h1>Inscrivez-vous</h1>
+                    <fieldset class="fil">
+                        <legend>Entrer vos données</legend>
+                        
+                            
+                            
+                            <p>Nom</p>
+                            <input type="text"name="username"placeholder="Entrer votre nom">
+                            <p>Mot de passe </p>
+                            <input type="password" name="password"placeholder="Entrer votre de passe">
+                            <p>Télephone</p>
+                            <input type="text"name="phone" placeholder="Saisser votre numéro">
+                            <p>Email</p>
+                            <input type="email"name="email" placeholder="Saisser votre">
+                            
+                            <input type="submit" name="" value="Valider">
+                        
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</htmlm

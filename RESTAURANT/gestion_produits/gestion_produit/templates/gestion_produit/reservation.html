@@ -1,0 +1,111 @@
+{% load static %}
+{% block header %}
+
+	{% include "header.html" %}
+ 
+{% endblock %}
+
+
+<body>
+
+	<!-- breadcrumb-section -->
+	<div style="padding-top: 80px;">
+		<img class="img-fluid" src="{% static 'gestion_produit/assets/img/1.jpg' %}" alt="image">
+		<p style="position: absolute; top: 100px;">Faites votre reservation ici</p>
+
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- contact form -->
+	<div class="contact-from-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mb-5 mb-lg-0">
+					<div class="form-title">
+						<h2 class="text-center">Voulez-vous Faire une reservation ?</h2>
+						<p class="text-center">Pour Faire une reservation veuillez remplire ce formulaire !!! vous pouvez egalement commander que vous voulez pour votre reservation</p>
+					</div>
+				 	<div id="form_status"></div>
+					<div class="contact-form large shadow p-5">
+						<form type="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Choisissez Une Tables disponible</label>
+										<select class="form form-control" name="table" id="">									
+											<optgroup label="Tables disponibles">
+												<option value="1">Table N° 1</option>
+												<option value="2">Table N° 2</option>
+												<option value="6">Table N° 6</option>
+												<option value="8">Table N° 8</option>
+											</optgroup>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="">Date de reservation</label>
+										<input type="date" class="form form-control" placeholder="Date de reservation">
+									</div>
+									<p class="form-group">
+										<div><label for="">Le nombre de place</label></div>
+										<input class="form form-control w-100" type="number"name="name" id="name" min="1" placeholder="1">
+									</p>
+									
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="">Heure debut</label>
+										<input type="time" class="form form-control" placeholder="Heure Debut">
+									</div>
+									<div class="form-group">
+										<label for="">Heure fin</label>
+										<input type="time" class="form form-control" placeholder="Heure fin">
+									</div>
+									<div class="form-group">
+										<label for="">Heure fin</label>
+										<input type="file" class="form form-control" multiple>
+									</div>
+									<p style="font-size: 12px;">Voulez-vous commander un quelque chose ?</p>
+									<p class="d-flex justify-content-center"><a href="" class="btn btn-primary text-white w-25"> Oui </a></p>
+									<!-- 
+										<div><label for="">Votre Email</label></div>
+										<input class="form form-control" type="email" placeholder="Votre Email" name="email" id="email">							
+									<p class="form-group">
+										<p><label for="">Telephone</label></p>
+										<input class="form form-control" type="tel" placeholder="Telephone" name="phone" id="phone">
+									</p> -->
+								</div>
+								<p><input type="submit" value="Reserver"></p>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="contact-form-wrap">
+						<div class="contact-form-box">
+							<h4><i class="fas fa-map"></i> Addresse du Restaurant</h4>
+							<p>HAFIA <br> Labé. <br> Guinnée</p>
+						</div>
+						<div class="contact-form-box">
+							<h4><i class="far fa-clock"></i> Heures d'ouverture</h4>
+							<p>LUN - VEN: 7h à 2h <br> SAM - DIM: 10h à 23h </p>
+						</div>
+						<div class="contact-form-box">
+							<h4><i class="fas fa-address-book"></i> Contact</h4>
+							<p>Telephone: +224 620 595 080 <br> Email: barrydjouma370@gmail.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end contact form -->
+
+	<!-- footer -->
+
+
+	{% block footer %}
+	
+		{% include "footer.html" %}
+	
+	{% endblock %}
+	

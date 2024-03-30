@@ -1,0 +1,81 @@
+{% load static %}
+{% block header %}
+
+	{% include "header.html" %}
+ 
+{% endblock %}
+
+
+<body>
+
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Nous sommes disponible 24/7 </p>
+						<h1>Nous Contacter</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- contact form -->
+	<div class="contact-from-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mb-5 mb-lg-0 shadow p-3">
+					<div class="form-title">
+						<h2>Avez-vous des questions ?</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, ratione! Laboriosam est, assumenda. Perferendis, quo alias quaerat aliquid. Corporis ipsum minus voluptate? Dolore, esse natus!</p>
+					</div>
+				 	<div id="form_status"></div>
+					<div class="contact-form">
+						<form type="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+							<p>
+								<input type="text" placeholder="Votre Nom" name="name" id="name">
+								<input type="email" placeholder="Votre Email" name="email" id="email">
+							</p>
+							<p>
+								<input type="tel" placeholder="Telephone" name="phone" id="phone">
+								<input type="text" placeholder="Sujet" name="subject" id="subject">
+							</p>
+							<p><textarea name="message" id="message" cols="30" rows="10" placeholder="dites Nous votre Message ici"></textarea></p>
+							<input type="hidden" name="token" value="FsWga4&@f6aw" />
+							<div class="d-flex justify-content-center"><p><input type="submit" value="Envoyer"></p></div>
+						</form>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="contact-form-wrap">
+						<div class="contact-form-box">
+							<h4><i class="fas fa-map"></i> Addresse du Restaurant</h4>
+							<p>HAFIA <br> Labé. <br> Guinnée</p>
+						</div>
+						<div class="contact-form-box">
+							<h4><i class="far fa-clock"></i> Heures d'ouverture</h4>
+							<p>LUN - VEN: 7h à 2h <br> SAM - DIM: 10h à 23h </p>
+						</div>
+						<div class="contact-form-box">
+							<h4><i class="fas fa-address-book"></i> Contact</h4>
+							<p>Telephone: +224 620 595 080 <br> Email: barrydjouma370@gmail.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end contact form -->
+
+	<!-- footer -->
+
+
+	{% block footer %}
+	
+		{% include "footer.html" %}
+	
+	{% endblock %}
+	

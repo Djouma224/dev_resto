@@ -1,0 +1,75 @@
+{% load static %}
+
+{% block header %}
+
+	{% include "header.html" %}
+ 
+{% endblock %}
+
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg" style="height: 5px;" >
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>Voir les details</p>
+					<h1>{{var.nom}}</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end breadcrumb section -->
+
+<!-- single product -->
+<div class="single-product mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="section-title">	
+					<h3><span class="orange-text">Les</span> Details</h3>
+					<p>voici toutes les description a propos du detail de votre produit vous pouvez ajouter au panier </p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5">
+				<div class="single-product-img">
+					<a href="{% url 'detail_produit' var.id %}"><img src="{{ var.image.url }}" alt="{{var.nom}}" ></a>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="single-product-content">
+					<h3> {{var.nom}} </h3>
+					<p class="singlsingle-product-pricing">Prix: {{var.prix}} GNF</p>
+					<p>{{var.description}} </p>
+					<div class="single-product-form">
+						<form action="index.html">
+							<input type="number" placeholder="1">
+						</form>
+						<a href="{% url 'add_to_card' var.id %}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Ajouter au panier</a>
+						<p><strong>Categories: </strong>{{ var.categorie }}</p>
+					</div>
+					<h4>Share:</h4>
+					<ul class="product-share">
+						<li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+						<li><a href=""><i class="fab fa-twitter"></i></a></li>
+						<li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+						<li><a href=""><i class="fab fa-linkedin"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end single product -->
+
+
+
+
+
+{% block footer %}
+
+	{% include "footer.html" %}
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title> login</title>
+        <link rel="stylesheet" href="{% static 'gestion_compte/assets/djouma/style.css' %}" type="text/css" media="all" />
+    </head>
+    <body>
+        <div class="loginbox">
+         <img src="{% static 'gestion_compte/assets/djouma/avatar.jpg' %}" alt="avatars" class="avatar" />   
+         <h1>Connectez-vous</h1>
+         <form method="POST" action="">
+            {% csrf_token %}
+              <p>Nom</p>
+              <input type="text"name="username"placeholder="Entrer votre nom">
+              <p>Mot de passe </p>
+              <input type="password" name="password"placeholder="Entrer votre de passe">
+              
+              <input type="submit" name="" value="Connexion">
+              <a style="color: white;" href="{% url 'reset_password' %}">Mot de passe oublier ?</a> <br>
+              <a style="color: white;" href="{% url 'singup' %}">pas de compte ?</a>
+          </form>
+        </div>
+
+    </body>
+</html>
