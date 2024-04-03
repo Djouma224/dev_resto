@@ -102,10 +102,12 @@ def add_to_card(request,my_id):
 
 # fn qui affiche le panier de l'utilisateur
 def cart(request):
+    user=request.user
    # recuperer le panier de l'utilisateur. la fn ci_dessous renvoi l'objet s'il exite ou renvoie une erreur sinon
-    cart = get_object_or_404(Card, user=request.user)
+    cart,created = Card.objects.get_or_create(user=request.user)
+    orders = cart.orders.all()
     nb = cart.orders.count()    
-    context={"orders":cart.orders.all(),"nb":nb}# tout les elements de notre panier
+    context={"orders":orders,'nb':nb}# tout les elements de notre panier
     return render(request, 'gestion_produit/cart.html',context)
 
 # fn pour supprimer un produit dans le panier
