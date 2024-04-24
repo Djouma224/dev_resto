@@ -1,7 +1,9 @@
 #from django.http import JsonResponse
-
+from django.contrib import messages
+from datetime import datetime
+from django.utils import timezone
 from django.shortcuts import render,get_object_or_404,redirect,HttpResponse
-from .models import Produits,Categorie,Card,Order,Commentaires
+from .models import Produits,Categorie,Card,Order,Commentaires, Reservation
 from django.urls import reverse 
 from django.contrib.auth.decorators import login_required
 
@@ -53,7 +55,56 @@ def apropos(request):
     return render(request,'gestion_produit/about.html')
 
 def reservation(request):
-    return render(request,'gestion_produit/reservation.html')
+    
+    type_reservation = Reservation.type_reservation
+    
+    
+    
+    
+    if request.method == 'POST':
+        
+        user = request.user
+        type_reserve = request.POST.get('reservation')
+        date_str = request.POST.get('date')
+        time_str = request.POST.get('time')
+        tel = request.POST.get('tel')
+        message = request.POST.get('message')
+        
+        
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()  # Convertir en objet datetime.date
+        time = datetime.strptime(time_str, '%H:%M').time()  # Convertir en objet datetime.time
+        
+        
+        existing_reservation = Reservation.objects.filter( date=date, heure =time, reservation = "Ceremonie Mariage")
+        
+        if existing_reservation.exists():
+            # Si le créneau est pris, vous pouvez afficher un message d'erreur ou rediriger vers une autre page
+           messages.error(request, 'Ce créneau est déjà pris. Veuillez choisir un autre.')
+        
+        # Vérifier si le créneau est dans le passé
+        
+        elif (timezone.make_aware(timezone.datetime.combine(date, time)) < timezone.now()):
+            # Si le créneau est dans le passé, affichez un message d'erreur
+           messages.error(request, 'Vous ne pouvez pas réserver dans le passé.')
+        
+        # Créer le rendez-vous
+          # Redirige vers la page de confirmation du rendez-vous
+    
+        else:
+            reservation = Reservation.objects.create(client=user, phone_number=tel, date=date, heure=time, reservation = type_reserve, note = message)
+            reservation.save()
+        
+            return redirect('list_menu')
+    error_messages = messages.get_messages(request)
+    
+    context = {
+        "type_reservation": type_reservation,
+        "error_messages":error_messages
+    }
+
+    return render(request,'gestion_produit/reservation.html',context)
+
+
 
     # fonction pour les commentaires
 @login_required(login_url='/login')

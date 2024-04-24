@@ -12,6 +12,7 @@ class Categorie(models.Model):
     class Meta:
         verbose_name=("Categorie")
         verbose_name_plural=("Categories")
+        
     def __str__(self):
         return self.nom_categorie
 
@@ -72,11 +73,27 @@ class Commentaires(models.Model):
 
 # Model pour la gestion des reservations
 class Reservation(models.Model):
-    Num_table = models.CharField(max_length=5)
+   # Num_table = models.CharField(max_length=5)
+    type_reservation = [
+       ("Ceremonie Mariage","Ceremonie Mariage"),
+       ("Aniversaire","Aniversaire"),
+       ("Dîner","Dîner")
+        ]
+    status = [
+        ("confirmée","confirmée"),
+        ("en attente","en attente"),
+        ("annulée","annulée")
+    ]
+    client = models.ForeignKey(utilisateurs,on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length = 9)
     date = models.DateField()
     heure = models.TimeField()
-    nombre_personnes = models.IntegerField()
-    plats_commandes = models.ManyToManyField(Produits)
+    reservation = models.CharField(max_length = 32, choices =type_reservation, default = "Dîner")
+    statu = models.CharField(max_length = 32,choices = status, default = "en attente")
+    #nombre_personnes = models.IntegerField()
+    note = models.TextField(blank = True)
+    #plats_commandes = models.ManyToManyField(Produits)
+    
 
     def __str__(self):
-        return f"Réservation du {self.date} à {self.heure}"
+        return f"Réservation du {self.date} à {self.heure} pour {self.reservation}"
