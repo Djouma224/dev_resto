@@ -21,46 +21,55 @@
 <!-- end breadcrumb section -->
 
 <!-- cart -->
-<div class="cart-section mt-150 mb-150">
+<div class="cart-section mt-100 mb-150">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8 col-md-12">
-				<div class="cart-table-wrap">
+			<div class="col-lg-8 col-md-12 mb-3">
+				<div class="cart-table-wrap" style="box-shadow: 0px 0px 5px 1px  #F28123;">
 					<table class="cart-table">
 						<thead class="cart-table-head">
 							<tr class="table-head-row">
 								<th class="product-remove"></th>
-								<th class="product-image">Images des produits</th>
+								<th class="product-image">Images</th>
 								<th class="product-name">Nom</th>
 								<th class="product-price">Prix/U</th>
 								<th class="product-quantity">Quantité</th>
 								<th class="product-total">Prix</th>
 							</tr>
 						</thead>
-						<tbody>
-							
-							{% for order in orders %}
-							<tr class="table-body-row">
-								<td class="product-remove"><a href="{% url 'del_prod_card' order.id %}"><i class="far fa-window-close"></i></a></td>
-								<td class="product-image"><img src="{{ order.product.image.url }}" alt=""></td>
-								<td class="product-name">{{ order.product.nom }}</td>
-								<td class="product-price">{{ order.product.prix }} GNF</td>
-								<td class="product-quantity"><input type="number" value="{{ order.qte }}" min="1"  placeholder=""></td>
-								<td class="product-total"></td>
-							</tr>					
+						
+							<tbody>
+								
+								{% for order in orders %}
+								<tr class="table-body-row">
+									<td class="product-remove"><a href="{% url 'del_prod_card' order.id %}"><i class="far fa-window-close"></i></a></td>
+									<td class="product-image"><img src="{{ order.product.image.url }}" alt=""></td>
+									<td class="product-name">{{ order.product.nom }}</td>
+									<td class="product-price">{{ order.product.prix }} GNF</td>
+									<!-- <td class="product-quantity"><input type="number" value="{{ order.qte }}" min="1"  placeholder="" readonly name="qte"></td> -->
 
-							{% empty %}
-							<h3>
-								Votre panier est vide pour le moment
-							</h3>
-							{% endfor %}
-													
-						</tbody>
+									<td class="product-quantity"><input class="text-center" type="tel" value="{{ order.qte }}" readonly name="qte" style="width: 50px; align-self: center;margin: 3px;">
+										<a href="{% url 'update_qte' order.id %}" class="btn btn-primary align-items-center" style=" width: 30px; height: 30px;">+</a>
+										<a href="{% url 'dimininuer_qte' order.id %}" class="btn btn-primary align-items-center" style=" width: 30px; height: 30px;">-</a>
+									</td>
+
+
+									<td class="product-total">{{ order.calculate_pu }} GNF</td>
+								</tr>					
+
+								{% empty %}
+								<h3>
+									Votre panier est vide pour le moment
+								</h3>
+								{% endfor %}
+														
+							</tbody>
+						
 					</table>
 				</div>
 			</div>
 
-			<div class="col-lg-4">
+			<div class="col-lg-4 pb-3" style="box-shadow: 0px 0px 5px 1px  #F28123;">
 				<div class="total-section">
 					<table class="total-table">
 						<thead class="total-table-head">
@@ -80,15 +89,107 @@
 							</tr>
 							<tr class="total-data">
 								<td><strong>Total: </strong></td>
-								<td>545 GNF</td>
+								<td>{{total_price}} GNF</td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="cart-buttons">
 						<a href="cart.html" class="boxed-btn">mettre ajour</a>
-						<a href="checkout.html" class="boxed-btn black">Commender</a>
+						<a type=button href="" class="boxed-btn black"  data-toggle="modal" data-target="#Modal">Commender</a>
 					</div>
 				</div>
+
+
+				<!-- modals de commande start-->
+				<!-- modal1 -->
+
+				<form method="post" action=".">
+					{% csrf_token %}
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title text-center" id="exampleModalLabel" style="color: #F28123;">Confirmation de la commande</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p class="text-center">Pour confirmer la commande veillez remplire ce formulaire</p>
+									<input type="text" name="adresse" class="form-control mb-2 shadow" placeholder="Donner votre Adresse">
+									<input type="tel" name="tel_livraison" class="form-control mb-2 shadow" placeholder="Numéro de tétéphone de livraison">
+									<p class="text-center" style="color: #F28123; font-weight: bold;">veillez choisir le mode de livraison</p>
+									<div class="d-flex justify-content-around">
+										<div>
+											<input type="radio" name="livraison" id="radio1" value="domicile">
+											<label for="radio1"><em>A domicile</em></label>
+										</div>
+										<div>
+											<input type="radio" name="livraison" id="radio2" value="emporter">
+										<label for="radio2"><em>A emporter</em></label>
+										</div>
+									</div>
+
+								</div>
+								<div class="modal-footer d-flex justify-content-center">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+									<button type="submit" class="btn btn-success">Commander</button>
+								</div>
+							</div>
+						</div>
+					</div>		
+				</form>
+				  <!-- modal 2 -->
+				<!-- <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">
+					essai
+				</a> -->
+								
+				<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-sm">
+					  <div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title h6 text-center" id="exampleModalLabel" style="color: #F28123;">Voulez-vous effectuer la commande ?</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<!-- <div class="modal-body">
+							confirmation
+							</div> -->
+							<div class="modal-footer d-flex justify-content-center">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-dismiss="modal">Oui</button>
+							</div>
+					  </div>
+					</div>
+				</div>
+				<!-- end modals -->
+
+				
+
+
+				{% comment %} <form action="" method="post">
+					{% csrf_token %}
+					<div class="modal-body">
+						<p class="text-center">Pour confirmer la commande veillez remplire ce formulaire</p>
+						<input type="text" name="adresse" class="form-control mb-2 shadow" placeholder="Donner votre Adresse">
+						<input type="tel" name="tel_livraison" class="form-control mb-2 shadow" placeholder="Numéro de tétéphone de livraison">
+						<p class="text-center" style="color: #F28123; font-weight: bold;">veillez choisir le mode de livraison</p>
+						<div class="d-flex justify-content-around">
+							<div>
+								<input type="radio" name="livraison" id="radio1" value="domicile">
+								<label for="radio1"><em>A domicile</em></label>
+							</div>
+							<div>
+								<input type="radio" name="livraison" id="radio2" value="emporter">
+							<label for="radio2"><em>A emporter</em></label>
+							</div>
+						</div>
+						<button type="submit">commander</button>
+					</div>
+				</form> {% endcomment %}
+
+
 
 				<div class="coupon-section">
 					<h3>Apply Coupon</h3>

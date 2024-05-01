@@ -1,0 +1,103 @@
+{% block header %}
+
+	{% include "header.html" %}
+ 
+{% endblock %}
+
+
+<!-- product section -->
+<div class="product-section mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="section-title">	
+					<h3><span class="orange-text">VOTRE</span> COMMANDE</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
+
+				</div>
+			</div>
+		</div>
+		
+		<div>
+			{% for order in orders %}
+			<p>{{ order.product.nom }}</p>
+			{% endfor %}
+			<p class="h3" style="color: red;">salut tout le monde</p>
+		</div>
+		
+		<!-- Button trigger modal -->
+<!-- <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+	Launch demo modal
+</a> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+  </div>
+  
+
+
+  <!-- modal 2 -->
+  <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">
+	essai
+  </a>
+
+
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Voulez-vous effectuer la commande ?</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<!-- <div class="modal-body">
+			confirmation
+			</div> -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-dismiss="modal">Oui</button>
+			</div>
+	  </div>
+	</div>
+</div>
+  
+
+
+
+<!-- end product section -->
+
+
+
+<!-- essai avec modal -->
+<!-- Button to Open the Modal -->
+
+
+
+
+{% block footer %}
+
+	{% include "footer.html" %}
+
+{% endblock %}
+
+
+	

@@ -1,5 +1,5 @@
 from django.urls import path
-from gestion_produit.views import list_menu,all_products,detail_produit,recherche,contact,apropos,add_to_card,cart,del_prod_card,aff_categories,reservation
+from gestion_produit.views import *
 urlpatterns = [
     # url pour affihcer les details d'un produit
     path('detail_produit/<int:my_id>/',detail_produit,name='detail_produit'),
@@ -24,6 +24,12 @@ urlpatterns = [
     path('apropos',apropos,name='apropos'),
     # url pour reservation
     path('reservation',reservation,name='reservation'),
+    # url ajouter qte
+    path('update_qte/<int:order_id>/',update_qte,name="update_qte"),
+    # url diminuer qte
+    path('dimininuer_qte/<int:order_id>/',dimininuer_qte,name="dimininuer_qte"),
+    # url commander
+    path('commander',commander,name="commander")
      
 
     

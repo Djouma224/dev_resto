@@ -1,7 +1,7 @@
 #from django.http import JsonResponse
 
 from django.shortcuts import render,get_object_or_404,redirect,HttpResponse
-from .models import Produits,Categorie,Card,Order,Commentaires
+from .models import Produits,Categorie,Card,Order,Commentaires,Commande,Commandes,UserCommande
 from django.urls import reverse 
 from django.contrib.auth.decorators import login_required
 
@@ -106,12 +106,84 @@ def cart(request):
    # recuperer le panier de l'utilisateur. la fn ci_dessous renvoi l'objet s'il exite ou renvoie une erreur sinon
     cart,created = Card.objects.get_or_create(user=request.user)
     orders = cart.orders.all()
-    nb = cart.orders.count()    
-    context={"orders":orders,'nb':nb}# tout les elements de notre panier
+    nb = cart.orders.count()
+    total_price = cart.calculate_total_price()
+
+    if nb !=0:
+        if request.method == 'POST':
+            tel_livraison = request.POST.get('tel_livraison')
+            adresse = request.POST.get('adresse')
+            livraison = request.POST.get('livraison')
+            print(tel_livraison)
+            
+            user_commande=UserCommande.objects.create(adress=adresse,
+                                            tel_livraison=tel_livraison,
+                                            livraison=livraison)
+                                            
+            user_commande.save()
+            # user=request.user
+            card = Card.objects.get(user=user)
+            # orders = card.orders.all()
+            orders = Order.objects.filter(user=user)
+            
+            produits = Commandes.objects.create(user=user.username)
+            # produits.coordonnes.add(user_commande)
+
+            for order in orders:
+                new=Commande.objects.create(
+                                        nom=order.product.nom,
+                                        qte=order.qte )
+                produits.produits.add(new)
+
+                new.save()
+                order.delete()
+
+            card.delete()
+            return render(request, 'gestion_produit/cart.html')
+        else:
+            print("Votre panier est vide pour le moment !!!")
+    
+    context={"orders":orders,
+             'nb':nb,
+             'total_price':total_price
+             }# tout les elements de notre panier
     return render(request, 'gestion_produit/cart.html',context)
+
+#fn pour mise a jour des quantites:
+def update_qte(request,order_id):
+    order=Order.objects.get(id=order_id)
+    order.ajout_qte()
+    return redirect('cart')
+
+def dimininuer_qte(request,order_id):
+    order=Order.objects.get(id=order_id)
+    order.dimininuer_qte()
+    return redirect('cart')
 
 # fn pour supprimer un produit dans le panier
 def del_prod_card(request,my_id):
     product_del = get_object_or_404(Order,id=my_id)
     product_del.delete()
     return redirect('cart')
+# fn commander 
+def commander(request):
+    user=request.user
+    card = Card.objects.get(user=user)
+    # orders = card.orders.all()
+    orders = Order.objects.filter(user=user)
+    print(user.username)
+    
+        # produits = Commandes.objects.create(user=user.username)
+        
+        # for order in orders:
+        #     new=Commande.objects.create(
+        #                                 nom=order.product.nom,
+        #                                     qte=order.qte )
+        #     produits.produits.add(new)
+
+        #     new.save()
+        #     order.delete()
+        #     produits.coordonnes.add(user_commande)
+   
+        # card.delete()
+    return render(request,'gestion_produit/cart.html',{'card':card,'orders':orders})

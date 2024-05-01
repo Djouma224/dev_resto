@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Produits,Categorie,Order,Card,Commentaires,Reservation
+from .models import Commandes, Produits,Categorie,Order,Card,Commentaires,Reservation,Commande,UserCommande
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('nom','prix','date','categorie')
     search_fields = ('nom','categorie')
@@ -12,6 +12,9 @@ admin.site.register(Order)
 admin.site.register(Card)
 admin.site.register(Commentaires)
 admin.site.register(Reservation)
+admin.site.register(Commande)
+admin.site.register(Commandes)
+admin.site.register(UserCommande)
 
 
 admin.site.site_title=("Bienvenu dans mon site E-commerce") # pour chager le titre au niveau du login admin

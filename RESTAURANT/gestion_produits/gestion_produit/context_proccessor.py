@@ -1,12 +1,11 @@
 from django.urls import reverse
-from .models import Categorie, Commentaires, Produits
-# def cart(request):
-# #     #recuperer le panier de l'utilisateur. la fn ci_dessous renvoi l'objet s'il exite ou renvoie une erreur sinon
-#     cart = Card(user = request.user)
-#     nb = cart.orders.count()
-#     orders = cart.orders.all()
-#     context={'nb':nb,'orders':orders}# tout les elements de notre panier
-#     return context
+from .models import Categorie, Commentaires, Produits,Card
+def cart(request):
+#     #recuperer le panier de l'utilisateur. la fn ci_dessous renvoi l'objet s'il exite ou renvoie une erreur sinon
+    cart = Card(user = request.user)
+    nb = cart.orders.count()
+    context={'nb':nb}# tout les elements de notre panier
+    return context
 
 
 def commentaire(request):
